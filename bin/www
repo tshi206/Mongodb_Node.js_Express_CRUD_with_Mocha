@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Toggle debug module here
+process.env['DEBUG'] = 'mongodb-node.js-express-crud-with-mocha:server';
+
 /**
  * Module dependencies.
  */
