@@ -1,6 +1,8 @@
 import * as mongoose from "mongoose";
 const debug = require('debug')('mongodb-node.js-express-crud-with-mocha:connection');
 
+const MarioChar = require('../models/mariochar');
+
 export let connectToDb = () => {
 
     // connect to mongodb 'testaroo' at localhost, if it does not exist,

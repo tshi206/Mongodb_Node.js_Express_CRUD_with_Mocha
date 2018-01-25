@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const debug = require('debug')('mongodb-node.js-express-crud-with-mocha:connection');
+const MarioChar = require('../models/mariochar');
 exports.connectToDb = () => {
     // connect to mongodb 'testaroo' at localhost, if it does not exist,
     // it will be created automatically
