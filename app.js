@@ -7,8 +7,12 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var connection = require('./test/connection');
 
 var app = express();
+
+// connect to mongodb
+connection.connectToDb();
 
 // set error level to 'development'
 app.set("env", "development");

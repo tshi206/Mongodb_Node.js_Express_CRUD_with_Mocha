@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
 // Toggle debug module here
-process.env['DEBUG'] = 'mongodb-node.js-express-crud-with-mocha:server';
+// To toggle individual module see the following:
+//   process.env['DEBUG'] = 'mongodb-node.js-express-crud-with-mocha:server';
+//   process.env['DEBUG'] = 'mongodb-node.js-express-crud-with-mocha:connection';
+process.env['DEBUG'] = 'mongodb-node.js-express-crud-with-mocha:*';
 
 /**
  * Module dependencies.

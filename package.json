@@ -5,6 +5,10 @@
   "scripts": {
     "start": "nodemon ./bin/www"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tshi206/Mongodb_Node.js_Express_CRUD_with_Mocha.git"
+  },
   "devDependencies": {
     "@types/node": "^9.3.0"
   },
