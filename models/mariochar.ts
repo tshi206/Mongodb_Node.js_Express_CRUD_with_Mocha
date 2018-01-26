@@ -14,10 +14,23 @@ const MarioCharSchema = new Schema({
     weight: Number,
 });
 
-// Create Model with a collection name 'mariochar', based on MarioCharSchema
-// persist data via this model will enforce the data to be persisted in the
-// collection 'mariochar' and with properties expected by MarioCharSchema (
+// Create Model with a collection name 'mariochars', based on MarioCharSchema
+// Persist data via this model will enforce the data to be persisted in the
+// collection 'mariochars' and with properties expected by MarioCharSchema (
 // note that schemata are NOT strictly enforced in NoSQL DB)
+/*
+    IMPORTANT:
+    if the collection name has not been explicitly specified as the third parameter,
+     mongoose will generate the collection with a name INDUCED by the model name:
+            Induced collection name === <model_name> + 's' (all in lowercase)
+     Hence the induced collection name for model 'mariochar' would be 'mariochars'
+     To explicitly specify the Collection name use the following:
+            mongoose.model('mariochar', MarioCharSchema, <Collection_Name>);
+     The code below DOES NOT specify the collection name, therefore, the following
+     is equivalent to:
+            const MarioChar = mongoose.model
+            ('mariochar', MarioCharSchema, 'mariochars');
+ */
 const MarioChar = mongoose.model('mariochar', MarioCharSchema);
 
-exports = MarioChar;
+module.exports = MarioChar;
