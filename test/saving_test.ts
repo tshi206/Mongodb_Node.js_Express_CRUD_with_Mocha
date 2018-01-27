@@ -1,7 +1,6 @@
 import * as assert from "assert";
 import {connectToDb, disconnectFromDB, dropCollectionMariochars} from "./connection";
 import {equal} from "assert";
-import {error} from "util";
 
 const MarioChar = require('../models/mariochar');
 
