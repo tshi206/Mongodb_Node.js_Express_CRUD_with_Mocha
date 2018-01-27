@@ -1,6 +1,7 @@
 import * as assert from "assert";
 import {connectToDb, disconnectFromDB, dropCollectionMariochars} from "./connection";
 import {equal} from "assert";
+import {error} from "util";
 
 const MarioChar = require('../models/mariochar');
 
@@ -12,23 +13,42 @@ const MarioChar = require('../models/mariochar');
         import * as Mocha from 'Mocha'
     Mocha-specific functions will run as expected even without explicitly
      importing Mocha module.
+     Hence, Mocha can look up all the hooks we defined even they are scattered
+     across our project. In conclusion, hooks can be defined across different
+     modules over the entire project directories.
  */
+
+// this is just to demonstrate that hooks can be defined outside the describe() block
+before("connecting to DB", done => {
+    // connect to db
+    connectToDb(done);
+});
+
+after("disconnecting from DB", done => {
+    dropCollectionMariochars().then(disconnectFromDB)
+        .then(() => done()).catch(err => {throw err});
+});
 
 // 'describe' block contains a set of test.
 // preferably the tests within a describe block should all aim to test related
 // features.
 describe("Saving records", () => {
 
-    before("connect to DB", done => {
-        // connect to db
-        connectToDb();
-        done()
-    });
-
-    after("disconnect from DB", done => {
-        dropCollectionMariochars().then(disconnectFromDB);
-        done()
-    });
+    /*
+        The following two hooks are used to demonstrate that hooks can be
+        defined in different code blocks and still accessible to Mocha.
+        Defining hooks in a separate module also works without explicitly
+        importing neither Mocha nor the defining module itself.
+     */
+    // before("connecting to DB", done => {
+    //     // connect to db
+    //     connectToDb(done);
+    // });
+    //
+    // after("disconnecting from DB", done => {
+    //     dropCollectionMariochars().then(disconnectFromDB)
+    //         .then(() => done()).catch(err => {throw err});
+    // });
 
     // 'it' block contains a single test case
     // it should be well-described for maintainability
