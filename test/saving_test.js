@@ -69,7 +69,7 @@ describe("Saving records", () => {
             // Mocha cannot automatically detect the termination for this test
             // case.
             done();
-        });
+        }).catch(err => { throw err; });
     });
 });
 //# sourceMappingURL=saving_test.js.map
