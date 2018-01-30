@@ -16,12 +16,13 @@ const MarioChar = require('../models/mariochar');
      modules over the entire project directories.
  */
 describe("Finding records", () => {
+    let mario;
     // this hook below is scoped by its outer describe() block
     // therefore it is NOT accessible to the other describe() blocks
     beforeEach("populating DB with a single record before test:" +
         " finding_test", done => {
         console.log("persisting {name : 'Mario'} to the DB");
-        let mario = new MarioChar({
+        mario = new MarioChar({
             name: 'Mario'
         });
         mario.save().then(result => {
@@ -100,6 +101,24 @@ describe("Finding records", () => {
             return MarioChar.findOne({ name: 'Mario' }).then(result => assert(result.name === 'Mario'));
         })
             .then(() => done())
+            .catch(err => { throw err; });
+    });
+    it('Finds one record by ID from the database', function (done) {
+        // When instantiate a document via mongoose.Model's constructor
+        // a unique ObjectId({<Int32>}) is initialized automatically by mongoose.
+        // It will then be referenced by the '_id' property in the document
+        // created and we don't need to explicitly initialize this property
+        // by ourselves.
+        // Note that when querying the mongo DB we don't need to perform any
+        // casting on the '_id' field to make it an ObjectID. Mongoose will do
+        // the casting if needed, automatically when invoking methods like find(),
+        // findOne(), findById().
+        MarioChar.findOne({ _id: mario._id }).exec().then(result => {
+            assert(result._id.toString() === mario._id.toString());
+        })
+            .then(() => { return MarioChar.findById(mario._id); })
+            .then(result => assert_1.equal(String(result._id), String(mario._id)))
+            .then(done)
             .catch(err => { throw err; });
     });
 });
