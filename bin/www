@@ -13,6 +13,8 @@ process.env['DEBUG'] = 'mongodb-node.js-express-crud-with-mocha:*';
 var app = require('../app');
 var debug = require('debug')('mongodb-node.js-express-crud-with-mocha:server');
 var http = require('http');
+var connection = require('../test/connection');
+var db = require('../utils/db');
 
 /**
  * Get port from environment and store in Express.
@@ -29,11 +31,27 @@ var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
+ * Only start listening after DB connection made successfully.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// connect to mongodb
+connection.connectToDb().then(function (){
+    return db.prepareDB([
+        db.makeMarioChar({
+            name: 'Mario', weight: 60
+        }), db.makeMarioChar({
+            name: "Luigi", weight: 55
+        }), db.makeMarioChar({
+            name: 'Peach', weight: 45
+        })
+    ])
+}).then(debug).then(function () {
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+}).catch(function (err) {
+    throw err
+});
 
 /**
  * Normalize a port into a number, string, or false.

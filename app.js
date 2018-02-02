@@ -7,12 +7,9 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var connection = require('./test/connection');
+var chars = require('./routes/getChars');
 
 var app = express();
-
-// connect to mongodb
-connection.connectToDb();
 
 // set error level to 'development'
 app.set("env", "development");
@@ -31,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/chars', chars);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
